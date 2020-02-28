@@ -1,0 +1,36 @@
+﻿<Window x:Class="DCOM.WPF.MVVM.Tabs.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mvvm="clr-namespace:DCOM.WPF.MVVM;assembly=DCOM.WPF.MVVM"
+        xmlns:tabs="clr-namespace:DCOM.WPF.MVVM.Tabs"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="350" 
+        Width="525" 
+        d:DataContext="{d:DesignInstance tabs:MainWindowViewModel}">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Command="{Binding NewTabCommand}" Margin="0,0,12,0">New Tab</Button>
+        </StackPanel>
+
+        <TabControl ItemsSource="{Binding Tabs}">
+            <TabControl.Resources>
+                <DataTemplate DataType="{x:Type tabs:DateTab}">
+                    <tabs:DateTabView/>
+                </DataTemplate>
+            </TabControl.Resources>
+            
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type mvvm:ITab}">
+                    <TextBlock>
+                        <Run Text="{Binding Name}"/>
+                        <Hyperlink Command="{Binding CloseCommand}">X</Hyperlink>
+                    </TextBlock>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            
+        </TabControl>
+    </DockPanel>
+</Window>
